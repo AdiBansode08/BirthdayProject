@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy Birthday 💖</title>
+<style>
+  :root{
+    --bg1:#120022;
+    --bg2:#6d1b7b;
+    --accent1: #ff4e91;
+    --accent2: #8e2de2;
+    --text: #fff7fb;
+    --card-bg: rgba(255,255,255,0.06);
+  }
+  *{box-sizing:border-box}
+  body{ margin:0; min-height:100vh; font-family: "Poppins", "Segoe UI", sans-serif;
+    color:var(--text); background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, #ff4e91 100%);
+    overflow-x:hidden;}
+  .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .page { min-height:100vh; display:flex; align-items:flex-start; justify-content:center; padding:48px 16px; transition:opacity .4s ease, transform .4s ease; z-index:1; }
+  .hidden { display:none !important; }
+  header{ text-align:center; width:100%; max-width:980px; margin:auto; z-index:2; }
+  h1{ margin:24px 0 6px; font-size: clamp(1.8rem, 4.5vw, 3.2rem); letter-spacing: -0.02em;
+    line-height:1.02; text-shadow: 0 0 12px rgba(255,102,178,0.25), 0 0 30px rgba(142,45,226,0.12);}
+  p.lead{ margin:0 0 22px; color: rgba(255,255,255,0.9); opacity:.95; font-size: clamp(.95rem, 2.6vw, 1.15rem);}
+  .card { width: 100%; max-width:760px; margin: 20px auto; background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border-radius: 18px; padding: 28px; box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.02); backdrop-filter: blur(8px) saturate(1.05); z-index:2;}
+  .slider-wrap { position: relative; display:flex; justify-content:center; align-items:center; }
+  .slider { width: min(420px, 86%); max-width:420px; height: auto; overflow:hidden; border-radius: 20px; margin: 8px auto 0; display:block; }
+  .slides { display:flex; transition: transform .55s cubic-bezier(.2,.9,.25,1); will-change: transform; }
+  .slide { min-width: 100%; display:flex; justify-content:center; align-items:center; padding: 24px 12px; }
+  .imgWrap{ position: relative; width: clamp(180px, 34vw, 300px); height: clamp(180px, 34vw, 300px); border-radius: 50%; display:flex; align-items:center; justify-content:center; transform-origin:center;}
+  .imgWrap::before{ content:""; position:absolute; inset:-14px; border-radius:inherit; background: radial-gradient(circle at 30% 20%, rgba(255,78,145,0.15), rgba(142,45,226,0.06)); filter: blur(14px); z-index:0;}
+  .imgWrap::after{ content:""; position:absolute; inset:-6px; border-radius:inherit; border: 3px solid rgba(255,255,255,0.06); box-shadow: 0 0 30px rgba(255,78,145,0.12); z-index:0;}
+  .imgWrap img { width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; position:relative; z-index:1; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform .45s ease, filter .45s ease; border: 4px solid rgba(255,255,255,0.03);}
+  .imgWrap:hover img { transform: scale(1.03) rotate(-0.6deg); filter: saturate(1.05);}
+  .arrow { position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); color:var(--text); font-size:20px; cursor:pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.03); z-index: 3;}
+  .arrow:hover { transform: translateY(-50%) scale(1.06); }
+  .prev { left: calc(50% - 220px); } .next { right: calc(50% - 220px); }
+  .dots { display:flex; gap:8px; justify-content:center; margin-top:16px; }
+  .dot { width:10px; height:10px; border-radius:50%; background: rgba(255,255,255,0.12); box-shadow: 0 2px 8px rgba(142,45,226,0.08); cursor:pointer; }
+  .dot.active { background: linear-gradient(90deg,var(--accent1), var(--accent2)); box-shadow: 0 6px 18px rgba(142,45,226,0.20); transform:scale(1.15); }
+  .actions { display:flex; gap:14px; justify-content:center; margin-top:22px; }
+  .btn { padding:12px 20px; border-radius:28px; font-weight:600; cursor:pointer; background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    color:var(--text); border:1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.45); backdrop-filter: blur(6px);}
+  .btn.primary { background: linear-gradient(90deg,var(--accent1), var(--accent2)); color:#fff; border:none; box-shadow: 0 12px 30px rgba(142,45,226,0.18);}
+  .btn:active{ transform: translateY(1px); }
+  .letterCard{ width:90%; max-width:780px; margin:auto; border-radius:16px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:32px; box-shadow: 0 12px 40px rgba(0,0,0,0.45); backdrop-filter: blur(8px); text-align:left;}
+  .letterCard h2{ margin:0 0 14px; font-size:1.6rem; color:#fff; text-shadow: 0 0 8px rgba(255,78,145,0.12); }
+  .letterCard p{ font-size:1.05rem; line-height:1.6; color: #fff2f8; margin-bottom:18px; }
+  .letterFooter { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-top:6px; }
+  @media (max-width:560px){ .prev { left: 6px; } .next { right:6px; } .card { padding:18px; } .imgWrap { width: min(76vw, 260px); height: min(76vw, 260px); }}
+</style>
+</head>
+<body>
+
+<div class="particles" aria-hidden="true"></div>
+
+<main id="mainPage" class="page">
+  <div class="card" role="region" aria-labelledby="title">
+    <header id="title">
+      <h1>💖Happy Birthday NUTAN💖</h1>
+      <p class="lead"> MAHADEV BLESS YOU🌻</p>
+    </header>
+    <p class="lead"> A little surprise for you</p>
+    <div class="slider-wrap" aria-hidden="false">
+      <div class="slider" id="slider">
+        <div class="slides" id="slides">
+          <div class="slide"><div class="imgWrap"><img src="images/nutan-1.jpg" alt="Photo 1" loading="lazy" ></div></div>
+          <div class="slide"><div class="imgWrap"><img src="images/nutan-2.jpg" alt="Photo 2" loading="lazy" ></div></div>
+          <div class="slide"><div class="imgWrap"><img src="images/nutan-3.jpg" alt="Photo 3" loading="lazy" ></div></div>
+          <div class="slide"><div class="imgWrap"><img src="images/nutan-4.jpg" alt="Photo 4" loading="lazy"></div></div>
+        </div>
+      </div>
+      <button class="arrow prev" id="prev" aria-label="Previous image">❮</button>
+      <button class="arrow next" id="next" aria-label="Next image">❯</button>
+    </div>
+    <div style="margin-top:12px">
+      <div class="dots" id="dots" aria-hidden="false"></div>
+    </div>
+    <div class="actions" style="margin-top:18px">
+      <button class="btn primary" id="readLetter">Read Your Letter 💌</button>
+    </div>
+  </div>
+</main>
+
+<section id="letterPage" class="page hidden" aria-hidden="true">
+  <div class="letterCard">
+    <h2>For you, Newton</h2>
+    <p>
+      Dear <strong> Nutan</strong>,<br>
+      On this special day I want you to know how deeply you’re valued. Your laugh, your kindness and the way you see the little things make every ordinary day feel beautiful.
+      I hope this year brings you soft mornings, big dreams coming true and more smiles than you can count.
+    </p>
+    <p>
+      Always rooting for you,<br>
+      <strong>[Your Name] ❤️</strong>
+    </p>
+    <div class="letterFooter">
+      <div style="display:flex;gap:8px">
+        <button class="btn" id="backBtn">⬅ Back</button>
+      </div>
+      <div style="opacity:0.9; font-size:.95rem">Made with love ✨</div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* --- slider code unchanged --- */
+(function(){
+  const slidesEl = document.getElementById('slides');
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const dotsWrap = document.getElementById('dots');
+  let index = 0; let autoplayTimer = null;
+  function renderDots(){ dotsWrap.innerHTML = ''; slides.forEach((_, i) => {
+      const d = document.createElement('button'); d.className = 'dot' + (i===index ? ' active' : '');
+      d.setAttribute('aria-label','Go to slide ' + (i+1));
+      d.addEventListener('click', ()=> { goTo(i); resetAutoplay(); });
+      dotsWrap.appendChild(d); }); }
+  function update(){ slidesEl.style.transform = `translateX(-${index * 100}%)`;
+    Array.from(dotsWrap.children).forEach((dot, i) => dot.classList.toggle('active', i===index)); }
+  function prev(){ index = (index-1+slides.length) % slides.length; update(); }
+  function next(){ index = (index+1) % slides.length; update(); }
+  function goTo(i){ index = (i+slides.length)%slides.length; update(); }
+  prevBtn.addEventListener('click', ()=>{ prev(); resetAutoplay(); });
+  nextBtn.addEventListener('click', ()=>{ next(); resetAutoplay(); });
+  document.addEventListener('keydown', (e)=>{ if (e.key === 'ArrowLeft') { prev(); resetAutoplay(); } if (e.key === 'ArrowRight') { next(); resetAutoplay(); } });
+  let startX = 0; let isTouch = false;
+  slidesEl.addEventListener('touchstart', (e)=> { startX = e.touches[0].clientX; isTouch = true; });
+  slidesEl.addEventListener('touchend', (e)=> { if (!isTouch) return; const endX = e.changedTouches[0].clientX; const diff = endX - startX;
+    if (diff > 40) prev(); else if (diff < -40) next(); isTouch = false; resetAutoplay(); });
+  function startAutoplay(){ autoplayTimer = setInterval(()=> next(), 3500); }
+  function stopAutoplay(){ clearInterval(autoplayTimer); autoplayTimer = null; }
+  function resetAutoplay(){ stopAutoplay(); startAutoplay(); }
+  const slider = document.getElementById('slider');
+  slider.addEventListener('mouseenter', stopAutoplay); slider.addEventListener('mouseleave', startAutoplay);
+  renderDots(); update(); startAutoplay();
+})();
+/* --- particles background code unchanged --- */
+(function(){
+  const container = document.querySelector('.particles');
+  const colors = ['rgba(255,78,145,0.08)','rgba(142,45,226,0.06)','rgba(255,140,180,0.05)','rgba(255,200,220,0.04)'];
+  const total = 20;
+  for(let i=0;i<total;i++){ const el = document.createElement('div'); el.style.position='absolute';
+    const size = Math.random()*34 + 8; el.style.width = el.style.height = size + 'px'; el.style.left = (Math.random()*100) + 'vw'; el.style.top = (Math.random()*100) + 'vh';
+    el.style.borderRadius = '50%'; el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.filter = 'blur(' + (Math.random()*12 + 6) + 'px)'; el.style.opacity = 0.9 * Math.random(); el.style.transition = 'transform 10s linear'; container.appendChild(el);
+    (function(a){ const dx = (Math.random()*60 - 30); const dy = (Math.random()*-120 - 40); const dur = Math.random()*12 + 8;
+      setInterval(()=> { a.animate([{ transform: 'translate(0,0)' }, { transform: `translate(${dx}px, ${dy}px)` }], { duration: dur*1000, direction:'alternate', iterations: Infinity, easing:'ease-in-out' }); }, 1000); })(el); }})();
+/* --- modified letter page script --- */
+(function(){
+  const readBtn = document.getElementById('readLetter');
+  const mainPage = document.getElementById('mainPage');
+  const letterPage = document.getElementById('letterPage');
+  const backBtn = document.getElementById('backBtn');
+  readBtn.addEventListener('click', ()=>{ 
+    mainPage.classList.add('hidden'); 
+    letterPage.classList.remove('hidden'); 
+    letterPage.setAttribute('aria-hidden','false'); 
+    window.scrollTo({top:0, behavior:'smooth'}); 
+  });
+  backBtn.addEventListener('click', ()=>{ 
+    letterPage.classList.add('hidden'); 
+    mainPage.classList.remove('hidden'); 
+    mainPage.setAttribute('aria-hidden','false'); 
+    window.scrollTo({top:0, behavior:'smooth'}); 
+  });
+})();
+</script>
+
+<!-- 🎉 Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script>
+window.addEventListener("load", () => {
+  // 🎉 Confetti on first load
+  confetti({ particleCount: 180, spread: 120, origin: { y: 0.6 } });
+});
+</script>
+</body>
+</html>
